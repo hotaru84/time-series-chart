@@ -1,11 +1,14 @@
 import ChartComponent from './ChartComponent';
 import { mockData } from './data';
-import { VStack, Button, Text } from '@chakra-ui/react';
+import { VStack, Button, Text, HStack } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 import SyslogTable from './SyslogTable';
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Dashboard from './dashboard';
 import ReorderModal from './ReorderModal';
+import PopoverNotification from './PopoverNotification';
+import { HoverExpandButton } from './HoverableButton';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,15 +29,23 @@ function App() {
 
   return (
     <Router>
+      <HStack w="full" h="full">
+        <VStack h="full" gap={4} p={6} alignItems={"start"}>
+          <HoverExpandButton icon={<AddIcon />} label={'ADD'} />
+        </VStack>
       <VStack w="100vw" h="full" gap={4} p={6}>
         <Routes>
           <Route path="/" element={<>
             <Link to="/dashboard">Dashboard</Link>
             <ChartComponent data={mockData} />
             <SyslogTable />
+              <PopoverNotification
+                title="通知タイトル"
+                description="通知の詳細な説明をここに記載します。">
             <Button onClick={handleOpenModal} mt={4}>
               アイテムの順序変更
             </Button>
+              </PopoverNotification>
             <ReorderModal
               isOpen={isModalOpen}
               onClose={handleCloseModal}
@@ -51,6 +62,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </VStack>
+      </HStack>
     </Router>
   );
 }

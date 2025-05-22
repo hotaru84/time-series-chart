@@ -74,7 +74,7 @@ function SortableItem({ item }: SortableItemProps) {
       justifyContent="space-between"
     >
       <Text>{item.name}</Text>
-      <Box as="span" cursor="grab" p={2} {...attributes} {...listeners}>
+      <Box as="span" cursor="grab" p={2} {...attributes} {...listeners} fontSize={"lg"}>
         &#x2261; {/* Unicode for three horizontal lines (hamburger icon) */}
       </Box>
     </Box>
